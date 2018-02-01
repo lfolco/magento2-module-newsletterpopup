@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <bitbull>
+            <settings>
+                <display_mode>0</display_mode>
+            	<popup_delay>30</popup_delay>
+                <popup_title>Subscribe to Our Newsletter!</popup_title>
+                <popup_text>20% Off Your First Order</popup_text>
+            </settings>
+        </bitbull>
+    </default>
+</config>

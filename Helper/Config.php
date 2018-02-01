@@ -9,6 +9,8 @@ class Config extends AbstractHelper
 {
 
     const BASE_CONFIG_XML_PREFIX  = 'bitbull/settings/%s';
+    const USE_AJAX                = 'use_ajax';
+    const DISPLAY_MODE            = 'display_mode';
     const POPUP_DELAY             = 'popup_delay';
     const POPUP_TITLE             = 'popup_title';
     const POPUP_TEXT              = 'popup_text';

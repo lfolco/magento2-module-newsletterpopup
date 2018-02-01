@@ -36,8 +36,10 @@ class NewsletterPopup extends \Magento\Framework\View\Element\Template
     public function getConfig()
     {
         return [
+            'display_mode' => $this->getDisplayMode(),
+            'use_ajax' => $this->getUseAjax(),
             'delay' => $this->_getPopupDelay(),
-            'title' => $this->_getPopupTitle()
+            'title' => $this->_getPopupTitle(),
         ];
     }
 
@@ -49,6 +51,26 @@ class NewsletterPopup extends \Magento\Framework\View\Element\Template
     public function getPopupText()
     {
         return $this->configHelper->getConfigParam(NewsletterPopupConfig::POPUP_TEXT);
+    }
+
+    /**
+     * Newsletter Use Ajax.
+     *
+     * @return string
+     */
+    protected function getUseAjax()
+    {
+        return (string) $this->escapeHtml($this->configHelper->getConfigParam(NewsletterPopupConfig::USE_AJAX));
+    }
+
+    /**
+     * Newsletter Popup Mode.
+     *
+     * @return string
+     */
+    protected function getDisplayMode()
+    {
+        return (string) $this->escapeHtml($this->configHelper->getConfigParam(NewsletterPopupConfig::DISPLAY_MODE));
     }
 
     /**

@@ -3,6 +3,7 @@ define([
     "jquery",
     "Magento_Ui/js/modal/modal",
     "mage/cookies",
+    "mage/validation",
     "domReady!"
 
 ], function($,modal) {
@@ -28,11 +29,77 @@ define([
                   buttons: ''
                 };
 
-            if (this._isCookieSet (cookie) != true )  {
 
-                this._logTime(time, function(){
-                    $widget._openModal(options, cookie);
+            var $hld = $('.popup-newsletter');
+
+            function removeMessage() {
+                $hld.find('.message').remove();
+            }
+
+            function showMessage(msg, error) {
+
+                var type = error ? 'error' : 'success';
+                var $msg = $(
+                    '<div class="message-'+type+' '+type+' message">' +
+                        '<div>'+msg+'</div>'+
+                    '</div>');
+
+                removeMessage();
+                $hld.prepend($msg);
+
+                if (error) {
+                    setTimeout(function(){
+                        removeMessage();
+                    }, 4000);
+                } else {
+                    $hld.find('.content').hide();
+                    setTimeout(function(){
+                        $widget.element.modal('closeModal');
+                    }, 4000);
+                }
+            }
+
+            /* Init Ajax */
+            if (this.options.use_ajax) {
+                $hld.find('.form.subscribe').submit(function(){
+                    var $form = $(this);
+                    if (!$form.valid()) return;
+                    $form.find('button').attr('disabled', 'disabled');
+                    $.ajax({
+                        url: $form.attr('action'),
+                        dataType: 'json',
+                        method: 'POST',
+                        data: $form.serialize(),
+                        success: function(res) {
+                            if (res.success) {
+                                showMessage(res.message);
+                            } else {
+                                showMessage(res.message, 1);
+                            }
+                        },
+                        error: function() {
+                            showMessage('Unexpected Error', 1);
+                        },
+                        complete: function(){
+                            $form.find('button').removeAttr('disabled');
+                        }
+                    });
+                    return false;
                 });
+            }
+
+            /* Allow custom display */
+            window.openNewsletterPopup = function () {
+                removeMessage();
+                $hld.find('.content').show();
+                $widget._openModal(options, cookie);
+            };
+
+            if (this.options.display_mode == 0) {
+                /* Display after time dalay */
+                if (this._isCookieSet(cookie) != true) {
+                    this._logTime(time, openNewsletterPopup);
+                }
             }
 
         },

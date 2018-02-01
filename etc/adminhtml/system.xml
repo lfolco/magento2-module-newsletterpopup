@@ -10,14 +10,25 @@
             <tab>bitbull</tab>
             <resource>Magento_Config::config_admin</resource>
             <group id="settings" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
-                <label>Settings</label>
+                <label>Enable Extension</label>
                 <field id="enabled" translate="label" type="select" sortOrder="200" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Display Popup</label>
+                    <label>Enable Extension</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="use_ajax" translate="label" type="select" sortOrder="200" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Use Ajax</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="display_mode" translate="label" type="select" sortOrder="200" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Display Mode</label>
+                    <source_model>Bitbull\NewsletterPopup\Model\Config\Source\DisplayMode</source_model>
                 </field>
                 <field id="popup_delay" translate="label" type="text" sortOrder="300" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Popup Delay</label>
                     <validate>required-entry</validate>
+                    <depends>
+                        <field id="display_mode">0</field>
+                    </depends>
                 </field>
                 <field id="popup_title" translate="label" type="text" sortOrder="400" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Popup Title</label>
